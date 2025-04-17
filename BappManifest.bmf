@@ -1,4 +1,4 @@
-Uuid: 2fb211f0031c44568add5faeae819115
+Uuid: cd14679d11d04171a734226df6fc9351
 ExtensionType: 1
 Name: PDF Render
 RepoName: pdf-render
@@ -7,7 +7,7 @@ SerialVersion: 1
 MinPlatformVersion: 0
 ProOnly: False
 Author: RealestName
-ShortDescription: This extension renders PDF files and enables viewing within a custom tab in the response section of the repeater.
+ShortDescription: This extension renders PDF files and enables their viewing within a custom tab in the repeater&apos;s response section.
 EntryPoint: ./original-ViewPdfFinal-1.0-SNAPSHOT.jar
 BuildCommand: ./gradlew jar
 SupportedProducts: Pro, Community
