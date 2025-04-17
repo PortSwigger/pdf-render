@@ -1,4 +1,4 @@
-Uuid: f48f1c7ec7c24c01a69bcf7124cffe45
+Uuid: 2fb211f0031c44568add5faeae819115
 ExtensionType: 1
 Name: PDF Render
 RepoName: pdf-render
@@ -7,7 +7,7 @@ SerialVersion: 1
 MinPlatformVersion: 0
 ProOnly: False
 Author: RealestName
-ShortDescription: This extension renders PDF files for viewing within a custom tab in the response section of the BurpSuite repeater.
+ShortDescription: This extension renders PDF files and enables viewing within a custom tab in the response section of the repeater.
 EntryPoint: ./original-ViewPdfFinal-1.0-SNAPSHOT.jar
 BuildCommand: ./gradlew jar
 SupportedProducts: Pro, Community
