@@ -4,7 +4,7 @@ Name: PDF Render
 RepoName: pdf-render
 ScreenVersion: 1.0.0
 SerialVersion: 1
-MinPlatformVersion: 0
+MinPlatformVersion: 18
 ProOnly: False
 Author: RealestName
 ShortDescription: This extension allows for rendering and viewing of PDF files in a custom tab within the response section of the repeater.
