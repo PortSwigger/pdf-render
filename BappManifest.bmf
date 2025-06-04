@@ -7,7 +7,7 @@ SerialVersion: 1
 MinPlatformVersion: 18
 ProOnly: False
 Author: RealestName
-ShortDescription: This extension allows for rendering and viewing of PDF files in a custom tab within the response section of the repeater.
+ShortDescription: Render and view PDF responses in a message editor tab.
 EntryPoint: ./original-ViewPdfFinal-1.0-SNAPSHOT.jar
 BuildCommand: ./gradlew jar
 SupportedProducts: Pro, Community
