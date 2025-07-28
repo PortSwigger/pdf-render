@@ -3,11 +3,11 @@ ExtensionType: 1
 Name: PDF Render
 RepoName: pdf-render
 ScreenVersion: 1.0.0
-SerialVersion: 1
+SerialVersion: 2
 MinPlatformVersion: 18
 ProOnly: False
 Author: RealestName
 ShortDescription: Render and view PDF responses in a message editor tab.
-EntryPoint: ./original-ViewPdfFinal-1.0-SNAPSHOT.jar
-BuildCommand: ./gradlew jar
+EntryPoint: ViewPdfFinal-1.0-SNAPSHOT.jar
+BuildCommand: mvn clean install
 SupportedProducts: Pro, Community
