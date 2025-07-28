@@ -3,7 +3,7 @@ ExtensionType: 1
 Name: PDF Render
 RepoName: pdf-render
 ScreenVersion: 1.0.0
-SerialVersion: 2
+SerialVersion: 3
 MinPlatformVersion: 18
 ProOnly: False
 Author: RealestName
