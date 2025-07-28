@@ -31,45 +31,31 @@ public class CustomHttpResponseEditorTab implements ExtensionProvidedHttpRespons
 
     @Override
     public void setRequestResponse(HttpRequestResponse httpRequestResponse) {
-        if (httpRequestResponse == null || httpRequestResponse.response() == null) {
+        if (httpRequestResponse == null || !httpRequestResponse.hasResponse()) {
             return; // No response available
         }
 
-        // Get the raw response body
-        HttpResponse response = httpRequestResponse.response();
-        int bodyOffset = response.bodyOffset(); // Determine where the body starts
-        byte[] rawBytes = response.toByteArray().getBytes();
+        // Get the response body directly
+        byte[] pdfContent = httpRequestResponse.response().body().getBytes();
 
-        if (rawBytes.length > bodyOffset) {
-            // Extract the body (PDF content)
-            byte[] pdfContent = new byte[rawBytes.length - bodyOffset];
-            System.arraycopy(rawBytes, bodyOffset, pdfContent, 0, pdfContent.length);
-
-            // Load the PDF content into IcePdf
-            try {
-                propertyPanel.loadPdf(pdfContent);
-            } catch (Exception e) {
-                api.logging().logToError("Failed to load PDF: " + e.getMessage());
-            }
+        // Load the PDF content into IcePdf
+        try {
+            propertyPanel.loadPdf(pdfContent);
+        } catch (Exception e) {
+            api.logging().logToError("Failed to load PDF: " + e.getMessage());
         }
     }
 
     @Override
     public boolean isEnabledFor(HttpRequestResponse httpRequestResponse) {
-        // Extract the response from the HttpRequestResponse object
-        HttpResponse response = httpRequestResponse.response();
-
-        // Ensure the response is not null
-        if (response == null) {
-            return false; // Disable the tab if there's no response
+        // Check if the response exists
+        if (!httpRequestResponse.hasResponse()) {
+            return false;
         }
 
-        // Get the body offset and body bytes
-        int bodyOffset = response.bodyOffset();
-        byte[] rawBytes = response.toByteArray().getBytes(); // Full response including headers and body
-
         // Check if the response body starts with the PDF signature
-        return PdfUtil.isPdfFile(rawBytes, bodyOffset);
+        byte[] bodyBytes = httpRequestResponse.response().body().getBytes();
+        return PdfUtil.isPdfFile(bodyBytes, 0);
     }
 
     @Override

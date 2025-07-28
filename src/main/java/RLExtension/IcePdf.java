@@ -1,9 +1,8 @@
 package RLExtension;
 
-import org.icepdf.ri.common.MyAnnotationCallback;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
-import org.icepdf.ri.common.views.DocumentViewControllerImpl;
+import org.icepdf.ri.util.ViewerPropertiesManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,41 +19,48 @@ public class IcePdf {
     }
 
     public void buildPanel() {
-
         controller = new SwingController();
 
-        SwingViewBuilder factory = new SwingViewBuilder(controller);
+        // Configure viewer properties to disable annotation tools
+        ViewerPropertiesManager properties = ViewerPropertiesManager.getInstance();
+        properties.setBoolean(ViewerPropertiesManager.PROPERTY_SHOW_TOOLBAR_ANNOTATION, false);
+        properties.setBoolean(ViewerPropertiesManager.PROPERTY_SHOW_TOOLBAR_FORMS, false);
+        properties.setBoolean(ViewerPropertiesManager.PROPERTY_SHOW_UTILITYPANE_ANNOTATION, false);
 
+        // Build the viewer panel with the updated properties
+        SwingViewBuilder factory = new SwingViewBuilder(controller);
         viewerComponentPanel = factory.buildViewerPanel();
 
-        //Add interactive mouse link annotation support via callback
-        controller.getDocumentViewController().setAnnotationCallback(
-                new MyAnnotationCallback(controller.getDocumentViewController()));
-
-
+        // Disable annotation callback
+        controller.getDocumentViewController().setAnnotationCallback(null);
     }
 
     public Component getComponent() {
         return viewerComponentPanel;
     }
 
-    public void setPdfContent(byte[] respBytes, int bodyOffset,String description,String url) {
-        if(openDocument) {
+    public void setPdfContent(byte[] respBytes, int bodyOffset, String description, String url) {
+        if (openDocument) {
             controller.closeDocument();
-            openDocument=false;
+            openDocument = false;
         }
 
-        controller.openDocument(respBytes, bodyOffset, respBytes.length - bodyOffset,description,url);
+        controller.openDocument(respBytes, bodyOffset, respBytes.length - bodyOffset, description, url);
         openDocument = true;
 
-        controller.setPageFitMode(DocumentViewControllerImpl.PAGE_FIT_WINDOW_WIDTH,true);
+        // Use integer value for page fit mode
+        controller.setPageFitMode(1, true); // 1 corresponds to PAGE_FIT_WINDOW_WIDTH
+    }
+
+    public void setFullScreenMode() {
+        viewerComponentPanel.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        viewerComponentPanel.setVisible(true); // Ensure visibility
+        viewerComponentPanel.repaint(); // Force repaint
     }
 
     public void loadPdf(byte[] pdfBytes) {
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream(pdfBytes)) {
             controller.openDocument(inputStream, null, null);
-            //Set zoom to 100%
-            //controller.setZoom(1f);
         } catch (Exception e) {
             e.printStackTrace();
         }
